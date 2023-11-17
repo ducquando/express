@@ -1,0 +1,54 @@
+{
+  "animationScript": "&lt;1&gt; Textbox3\n&lt;2&gt; Textbox2\n&lt;3&gt; Textbox4",
+  "fileName": 1700116292978,
+  "diagram": [
+    {
+      "id": "Diagram0",
+      "index": 0,
+      "style": {
+        "colorBackground": 16777215,
+        "size": "800 450"
+      }
+    }
+  ],
+  "shape": null,
+  "table": null,
+  "text": [
+    {
+      "content": "of FUV",
+      "diagram": "Diagram0",
+      "id": "Textbox2",
+      "style": {
+        "alignment": "left",
+        "colorForeground": 2434341,
+        "fontSize": 16,
+        "position": "507 80",
+        "size": "96 91"
+      }
+    },
+    {
+      "content": "From CS program",
+      "diagram": "Diagram0",
+      "id": "Textbox3",
+      "style": {
+        "alignment": "left",
+        "colorForeground": 2434341,
+        "fontSize": 16,
+        "position": "353 51",
+        "size": "96 99"
+      }
+    },
+    {
+      "content": "Hello world!",
+      "diagram": "Diagram0",
+      "id": "Textbox4",
+      "style": {
+        "alignment": "left",
+        "colorForeground": 2434341,
+        "fontSize": 16,
+        "position": "96 61",
+        "size": "116 89"
+      }
+    }
+  ]
+}

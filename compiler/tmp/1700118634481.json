@@ -1,0 +1,42 @@
+{
+  "animationScript": "&lt;1&gt; Textbox0 \n&lt;2&gt; Table0[0,:] \n&lt;2&gt; Textbox1 \n&lt;3&gt; Table1[1,:]",
+  "fileName": 1700118634481,
+  "diagram": [
+    {
+      "id": "Diagram0",
+      "index": 0,
+      "style": {
+        "colorBackground": 16777215,
+        "size": "800 450"
+      }
+    }
+  ],
+  "shape": null,
+  "table": null,
+  "text": [
+    {
+      "content": "Textbox",
+      "diagram": "Diagram0",
+      "id": "Textbox0",
+      "style": {
+        "alignment": "left",
+        "colorForeground": 2434341,
+        "fontSize": 16,
+        "position": "47 91",
+        "size": "114 79"
+      }
+    },
+    {
+      "content": "Textbox",
+      "diagram": "Diagram0",
+      "id": "Textbox1",
+      "style": {
+        "alignment": "left",
+        "colorForeground": 2434341,
+        "fontSize": 16,
+        "position": "219 82",
+        "size": "206 79"
+      }
+    }
+  ]
+}
