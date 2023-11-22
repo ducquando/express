@@ -4,11 +4,11 @@ This is the express app that handles user-created diagrams from MyDraft app, whi
 
 ```
 {
-    animationScript: str,
     fileName: str,
     diagram: [{
         id: str,
         index: number,
+        script: str,                // `animation-text`
         style: {
             colorBackround: number,
             size: str,              // `width height`
