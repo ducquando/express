@@ -52,3 +52,31 @@ This is the express app that handles user-created diagrams from MyDraft app, whi
     },],
 }
 ```
+
+
+```
+suggestion for json format
+{
+    fileName: string,
+    pages: [{
+        name: string
+        index: number 
+        style: {
+            colorBackround: number,
+            size: str,              
+        },
+        script: str,
+        // all elements of page here
+        components: [
+            {
+                type: str; //image, text, group, etc. 
+                id: str;
+                content: str;
+                style: {
+                    object //can define properties of each style later. 
+                } 
+            }
+        ]
+    }]
+}
+```

@@ -1,0 +1,76 @@
+{
+  "fileName": "test_img",
+  "diagram": [
+    {
+      "id": "Page0",
+      "index": 0,
+      "style": {
+        "colorBackground": 16777215,
+        "size": "800 450"
+      },
+      "script": "&lt;1&gt; Cat1 \n&lt;2&gt; Cat2 \n&lt;3&gt; Cat3",
+      "components" : [
+        {
+          "id": "Cat1", 
+          "type": "image",
+          "content":{
+            "url": "https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg",
+            "size": "300 300", 
+            "style": {
+              "position": "50 50"
+            }
+          }
+        },
+        {
+          "id": "Cat2", 
+          "type": "image",
+          "content": {
+            "url": "https://media.istockphoto.com/id/1322123064/photo/portrait-of-an-adorable-white-cat-in-sunglasses-and-an-shirt-lies-on-a-fabric-hammock.jpg?s=612x612&w=0&k=20&c=-G6l2c4jNI0y4cenh-t3qxvIQzVCOqOYZNvrRA7ZU5o=",
+            "size": "300 300",
+            "style": {
+              "position": "500 500"
+            }
+          }
+
+        },
+        {
+          "id": "Cat3", 
+          "type": "image",
+          "content" : {
+            "url": "https://cdn.britannica.com/25/7125-050-67ACEC3C/Abyssinian-sorrel.jpg",
+            "size": "300 300",
+            "style": {
+              "position": "1000 1000"
+            }
+
+          }
+        }
+      ]
+    },
+    {
+      "id": "Page1",
+      "index": 1,
+      "style": {
+        "colorBackground": 16777215,
+        "size": "800 450"
+      },
+      "script": "&lt;1&gt; Text 1",
+      "components": [
+        {
+          "id": "Text1",
+          "type": "text", 
+          "content": {
+            "content": "End of slide",
+            "style": {
+              "alignment": "left",
+              "colorForeground": 2434341,
+              "fontSize": 16,
+              "position": "131 94",
+              "size": "79 56"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
