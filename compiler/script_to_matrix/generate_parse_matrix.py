@@ -396,13 +396,14 @@ def get_matrix(data, script):
 
     return mat
 
-#------------- READ INPUT FILE -------------
-# i don't know how to do the sys.argv thing so i put the input json 
-# file in the same directory as this script and name it input.json :) 
-with open('input.json') as f:
-    data = json.load(f)
+if __name__ == '__main__':
+    #------------- READ INPUT FILE -------------
+    # i don't know how to do the sys.argv thing so i put the input json 
+    # file in the same directory as this script and name it input.json :) 
+    with open('compiler\script_to_matrix\input.json') as f:
+        data = json.load(f)
 
-script = data["diagram"][0]["script"] 
-script = preprocess_script(script)
+    script = data["diagram"][0]["script"] 
+    script = preprocess_script(script)
 
-print(get_matrix(data, script))
+    print(get_matrix(data, script))

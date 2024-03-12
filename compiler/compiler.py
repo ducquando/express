@@ -1,5 +1,7 @@
 import io
 import sys
+from script_to_matrix.generate_parse_matrix import *
+from json_to_html import *
 
 def obtain_python(script: str):
     """
@@ -162,7 +164,7 @@ def parse_script(script):
 
         # Set is_next = True if see '-'
         elif script[i] == '-':
-            is_next = True;
+            is_next = True
         
         # Otherwise, append char to to_index/fr_index/curr_object
         elif script[i] != ' ':
@@ -195,6 +197,7 @@ def main():
     script = (embed + script).replace("\n", "").strip()
     parsed = parse_script(script)
     print(f'List of size ({len(parsed)},): {parsed}')
+    print(parsed)
 
 if __name__ == "__main__":
     main()

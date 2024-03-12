@@ -1,5 +1,5 @@
 {
-  "animationScript": "&lt;1&gt; Textbox0 \n&lt;2&gt; Textbox1 \n&lt;3&gt; Textbox2",
+  "animationScript": "<1> Textbox0\n<2> Textbox2\n<1, 5> Textbox1\n<3, 6> Textbox3\n<2-4> Textbox3\n<Graph> Graph1 = {'nodes': ['Shape1', 'Shape2'], 'edges': [['Shape1', 'Shape2']]}\n<Python> \nprint(f'<1-> {Graph1['nodes'][0]}')",
   "fileName": 1700118507909,
   "diagram": [
     {
@@ -42,6 +42,18 @@
       "content": "Text 2",
       "diagram": "Diagram0",
       "id": "Textbox2",
+      "style": {
+        "alignment": "left",
+        "colorForeground": 2434341,
+        "fontSize": 16,
+        "position": "313 53",
+        "size": "224 97"
+      }
+    },
+    {
+      "content": "Text 4",
+      "diagram": "Diagram0",
+      "id": "Textbox3",
       "style": {
         "alignment": "left",
         "colorForeground": 2434341,

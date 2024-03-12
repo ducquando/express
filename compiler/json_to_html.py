@@ -1,35 +1,26 @@
 import sys
 import json
+from compiler import *
 
 def json_to_html(json_data):
     texts = json_data["text"]
     id_to_text = {}
     for text in texts:
         id_to_text[text["id"]] = text["content"]
-        
     script = json_data["animationScript"]
-    script = script.replace("&lt;", "<")
-    script = script.replace("&gt;", ">")
+    print(script)
     script = script.replace("\n", "")
 
     start = 0	# <
     end = 0	# >
     current_frame = 0
     current_id = ''
-    frame_to_id = {}
-    for i in range(len(script)):
-        if script[i] == '<':
-            start = i
-            if current_id != '':
-                frame_to_id[current_frame] = current_id
-        elif script[i] == '>':
-            current_frame = int(script[start+1:i])
-            current_id = ''
-        elif script[i] != ' ':
-            current_id += script[i]
-        if i == len(script) - 1:
-            if current_id != '':
-                frame_to_id[current_frame] = current_id        
+    parsed = {}
+    try:
+        parsed = parse_script(script)
+        print(parsed)
+    except: 
+        return "meo"
     
     #print(frame_to_id)
         
@@ -49,10 +40,12 @@ def json_to_html(json_data):
 		<div class=\"reveal\">\n \
 			<div class=\"slides\">"
     
-    sorted_frame_to_id = dict(sorted(frame_to_id.items()))
-    for frame, id in sorted_frame_to_id.items():
-        if id in id_to_text:
-            html_output += "<section>" + id_to_text[id] + "</section>\n"
+    # sorted_frame_to_id = dict(sorted(frame_to_id.items()))
+    for frame in parsed:
+        html_output += "<section>"
+        for id in frame:
+            html_output += id_to_text[id] + "\n"
+        html_output += "</section>\n"
     			
     html_output += "</div>\n \
 		</div>\n \
@@ -76,8 +69,11 @@ def json_to_html(json_data):
     return html_output
 
 def main():
-    input_file_path = sys.argv[1]
-    output_file_path = sys.argv[2]
+    # input_file_path = sys.argv[1]
+    # output_file_path = sys.argv[2]
+    
+    input_file_path = "compiler/tmp/1700118507909.json"
+    output_file_path = "compiler\out.html"
 
     with open(input_file_path, 'r') as file:
         data = json.load(file)
