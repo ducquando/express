@@ -1,12 +1,19 @@
 import sys
 import json
 from compiler import *
+from Parser import *
 
 def json_to_html(json_data):
     texts = json_data["text"]
+    imgs = json_data["image"]
     id_to_text = {}
+    id_to_svg = {}
     for text in texts:
-        id_to_text[text["id"]] = text["content"]
+        id_to_text[text['id']] = text["content"]
+        id_to_svg[text['id']] = text["svg"]
+    for img in imgs:
+        id_to_text[img['id']] = img["content"]
+        id_to_svg[img['id']] = img["svg"].replace("href", "data-src")
     script = json_data["animationScript"]
     print(script)
     script = script.replace("\n", "")
@@ -20,7 +27,7 @@ def json_to_html(json_data):
         parsed = parse_script(script)
         print(parsed)
     except: 
-        return "meo"
+        return "err"
     
     #print(frame_to_id)
         
@@ -41,12 +48,15 @@ def json_to_html(json_data):
 			<div class=\"slides\">"
     
     # sorted_frame_to_id = dict(sorted(frame_to_id.items()))
-    for frame in parsed:
-        html_output += "<section>"
+    for frame in parsed["frames"]:
+        html_output += "<section data-auto-animate>"
         for id in frame:
-            html_output += id_to_text[id] + "\n"
+            if ('Textbox2' in id):
+                html_output += '<pre data-id="code"> <code class="hljs python" data-trim data-line-numbers data-noescape >' + id_to_text[id] + "</code></pre>"
+            else:
+                html_output += id_to_svg[id]+ "\n"
         html_output += "</section>\n"
-    			
+        
     html_output += "</div>\n \
 		</div>\n \
 		<script src=\"dist/reveal.js\"></script>\n \
@@ -72,7 +82,7 @@ def main():
     # input_file_path = sys.argv[1]
     # output_file_path = sys.argv[2]
     
-    input_file_path = "compiler/tmp/1700118507909.json"
+    input_file_path = "compiler/tmp/1710991185850.json"
     output_file_path = "compiler\out.html"
 
     with open(input_file_path, 'r') as file:

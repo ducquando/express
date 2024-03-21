@@ -124,16 +124,20 @@ def parse_script(script):
 
     indexes = set()         # All indexes
     eofs = set()            # All object displayed to eof
-    frames = [set()]        # All frames
+    code={"frames":[set()],
+            "init": [set()]}
 
     for i in range(len(script)):
+        # Set initialization:
+        
+        
         # Set frame and reset objects if start timing
         if script[i] == '<':
             # Put to infinite list if eof
             if is_eof:
                 eofs.add(curr_object)
 
-            frames = set_frame(frames, indexes, eofs, curr_object)
+            code["frames"] = set_frame(code["frames"], indexes, eofs, curr_object)
 
             # Reset
             curr_object = ''
@@ -150,7 +154,7 @@ def parse_script(script):
             # Continue if indexes are not number (e.g. Python, Graph)
             try:
                 start = int(fr_index)
-                end = int(to_index) if to_index != '' else len(frames) if is_next else start;
+                end = int(to_index) if to_index != '' else len(code["frames"]) if is_next else start;
                 indexes.update(range(start, end + 1))
             except ValueError:
                 continue
@@ -178,9 +182,9 @@ def parse_script(script):
 
         # Set frame if end of file but has some frames to add
         if i == len(script) - 1 and len(indexes) != 0:
-            frames = set_frame(frames, indexes, eofs, curr_object)
+            code["frames"] = set_frame(code["frames"], indexes, eofs, curr_object)
 			
-    return frames
+    return code
 
 def main():
     script = """
