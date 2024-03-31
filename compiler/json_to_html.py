@@ -1,7 +1,6 @@
 import sys
 import json
 from compiler import *
-from Parser import *
 
 def json_to_html(json_data):
     texts = json_data["text"]
