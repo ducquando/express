@@ -1,6 +1,7 @@
 const express = require('express');
 const { exec } = require('child_process');
 const fs = require('fs');
+const { path, join } = require('path');
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.post('/', (req, res) => {
   fs.writeFile(`compiler/tmp/${data.fileName}.json`, JSON.stringify(data, null, 2),  function (err, d) {
     if (err) throw err;
   });
-  const pythonProcess = exec(`python3 compiler/json_to_html.py compiler/tmp/${data.fileName}.json ../reveal.js/${data.fileName}.html`, (error, stdout, stderr) => {
+  const pythonProcess = exec(`python compiler/json_to_html.py compiler/tmp/${data.fileName}.json ./reveal.js/${data.fileName}.html`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error: ${error.message}`);
       res.status(500).send('Error with Python Script'); 
@@ -32,6 +33,14 @@ app.post('/', (req, res) => {
     res.send(`Python script output: ${stdout}`);
   }); 
   
+});
+
+app.get('/', function (req, res){
+  var name_search = req.query.slide 
+  console.log(name_search)
+  res.send(fs.readFile(join(__dirname, "/reveal.js/out.html"),  function (err, d) {
+    if (err) throw err;
+  }))
 });
 
 app.listen(port, () => {

@@ -96,11 +96,14 @@ def set_frame(frames: list[set], indexes: set, eofs: set, object: str):
             frames += [set() for _ in range(index - curr_max)]
             new_max = index
         frames[index - 1].add(object)
+        # print(frames)
 
     # Add infinite objects
     for i in range(curr_max, new_max):
         for eof in eofs:
+            print(i)
             frames[i].add(eof)
+    # print(frames)
 
     return frames
 
@@ -117,6 +120,9 @@ def parse_script(script):
     is_timing = False       # If parsing frame time (i.e <...>)   
     is_eof = False          # If parsing infinity (i.e. 'x-')
     is_next = False         # If parsing period (i.e. 'x-y')
+    is_index = False        # If parsing text index (i.e [...])
+    is_first_num = False    # If parsing index nums
+    is_count = False        # If parsing while indexing (i.e. 'x:y')
 
     curr_object = ''        # Object's id
     fr_index = ''           # From index
@@ -124,13 +130,11 @@ def parse_script(script):
 
     indexes = set()         # All indexes
     eofs = set()            # All object displayed to eof
-    code={"frames":[set()],
-            "init": [set()]}
+    code={"frames":[],
+            "init": set()}
 
     for i in range(len(script)):
-        # Set initialization:
-        
-        
+
         # Set frame and reset objects if start timing
         if script[i] == '<':
             # Put to infinite list if eof
@@ -144,6 +148,7 @@ def parse_script(script):
             indexes = set()
             is_timing = True
             is_eof = False
+            
         
         # Add index to indexes and reset temp indexes if end timing or see ','
         elif script[i] == '>' or script[i] == ',':
@@ -154,7 +159,7 @@ def parse_script(script):
             # Continue if indexes are not number (e.g. Python, Graph)
             try:
                 start = int(fr_index)
-                end = int(to_index) if to_index != '' else len(code["frames"]) if is_next else start;
+                end = int(to_index) if to_index != '' else len(code["frames"]) if is_next else start
                 indexes.update(range(start, end + 1))
             except ValueError:
                 continue
@@ -165,10 +170,28 @@ def parse_script(script):
             if script[i] == '>':
                 is_timing = False
                 is_next = False
+            
 
         # Set is_next = True if see '-'
         elif script[i] == '-':
             is_next = True
+            
+        
+        #if it's indexing, change to counting
+        elif script[i] == ":":
+            is_count = True
+            
+        
+        # Set is_index = True if see '['
+        elif script[i] == "[":
+            is_index = True
+            is_first_num = True
+            
+
+        elif script[i] == ']':
+            if is_count:
+                curr_object += "\\e"
+            is_index = False
         
         # Otherwise, append char to to_index/fr_index/curr_object
         elif script[i] != ' ':
@@ -177,28 +200,29 @@ def parse_script(script):
                     to_index += script[i]
                 else:
                     fr_index += script[i]
-            else:  
+            else:
+                if is_count:
+                    is_first_num = True
+                if is_index and is_first_num:
+                    curr_object+= "\\"
+                    is_first_num = False
+                    is_count = False
                 curr_object += script[i]
 
         # Set frame if end of file but has some frames to add
         if i == len(script) - 1 and len(indexes) != 0:
             code["frames"] = set_frame(code["frames"], indexes, eofs, curr_object)
-			
+	
+    print(code  )
     return code
 
 def main():
     script = """
-        <1> Textbox1
-        <2> Textbox5
-        <1, 5> Textbox1
-        <3, 6> Textbox3
-        <2-4> Textbox4
-        <Graph> Graph1 = {'nodes': ['Shape1', 'Shape2'], 'edges': [['Shape1', 'Shape2']]}
-        <Python> 
-        print(f'<1-> {Graph1["nodes"][0]}')       
+       <1, 4> Textbox2\n <2-3> Textbox2[p]\n  <2> Textbox5[0] \n <3> Textbox5   \n <4> Image1  
     """
     embed = embed_python(script)
     script = (embed + script).replace("\n", "").strip()
+    print(embed)
     parsed = parse_script(script)
     print(f'List of size ({len(parsed)},): {parsed}')
     print(parsed)
